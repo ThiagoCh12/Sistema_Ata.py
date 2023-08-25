@@ -8,7 +8,6 @@ def Pesquisar_ata():
     cursor = con.cursor()
     consulta = """SELECT * FROM tabAta WHERE palavra_chave LIKE?"""
     cursor.execute(consulta, ('%' + palavra_chave + '%',))
-    nomes_colunas = [descricao[0] for descricao in cursor.description]
 
     registros = cursor.fetchone()
     if registros:
@@ -21,6 +20,34 @@ def Pesquisar_ata():
         print(f"Pauta: {registros[5]}")
         print(f"Descrição: {registros[6]}")
         print(f"Palavra-chave: {registros[7]}")
+        
+    else:
+        print("Nenhum registro correspondente encontrado.")
+    cursor.close()
+    con.close()
+    return
+
+
+def Pesquisar_pessoa():
+
+    print("\n=========PESQUISAR PESSOA========\n")
+    matricula = input("Digite a matricula da pessoa: ")
+    con = sqlite3.connect('atas.db')
+    cursor = con.cursor()
+    consulta = """SELECT * FROM tabPessoa WHERE matricula LIKE?"""
+    cursor.execute(consulta, ('%' + matricula + '%',))
+
+    registros = cursor.fetchone()
+    if registros:
+
+        print("Detalhes do usuario:")
+        print(f"Nome: {registros[1]}")
+        print(f"Matricula: {registros[2]}")
+        print(f"Sexo: {registros[3]}")
+        print(f"Empresa: {registros[4]}")
+        print(f"Data nascimento: {registros[5]}")
+        print(f"Email: {registros[6]}")
+        print(f"Funcao: {registros[7]}")
         
     else:
         print("Nenhum registro correspondente encontrado.")
